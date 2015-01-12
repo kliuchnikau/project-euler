@@ -1,10 +1,7 @@
 -- https://projecteuler.net/problem=13
 -- brute force approach
+import Digits
 import Data.String.Utils
-
-digits :: Integral a => a -> [a]
-digits 0 = []
-digits n = digits(n `div` 10) ++ [n `mod` 10]
 
 toArrayOfIntegers :: [String] -> [Integer]
 toArrayOfIntegers xs = map (\a -> read a :: Integer) xs

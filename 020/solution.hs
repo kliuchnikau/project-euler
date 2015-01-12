@@ -1,6 +1,5 @@
 -- https://projecteuler.net/problem=20
-digits 0 = []
-digits n = digits(n `div` 10) ++ [n `mod` 10]
+import Digits
 factorial n = product [1..n]
 sumOfFactorialDigits n = sum (digits (factorial n))
 
