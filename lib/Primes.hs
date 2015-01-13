@@ -1,4 +1,4 @@
-module Primes (factors, prime) where
+module Primes (factors, primes, isPrime) where
 import Data.List
 
 --all factors calculation
@@ -15,23 +15,11 @@ factors' num currentFactor result | passedNum || factorAlreadyInList = sort (nub
                                     foundNewFactor = num `mod` currentFactor == 0
                                     currentFactorMultiplier = num `div` currentFactor
 
---prime calculation
-prime :: Int -> Bool
-prime 1 = False
-prime 2 = True
-prime n | even n = False
-        | otherwise = (oddFactorsUpto n upperBound) == []
-          where
-            upperBound = floor (sqrt (fromIntegral n))
+primes :: [Int]
+primes = 2 : [ x | x <- [3..], isPrime x]
 
-oddFactorsUpto :: Int -> Int -> [Int]
-oddFactorsUpto n upperBound = oddFactorsUpto' n 3 [] upperBound
-
-oddFactorsUpto' :: Int -> Int -> [Int] -> Int -> [Int]
-oddFactorsUpto' num currentFactor result upperBound | reachedUpperBound = result
-                                                    | foundNewFactor = oddFactorsUpto' num (currentFactor+2) (currentFactor:result) upperBound
-                                                    | otherwise = oddFactorsUpto' num (currentFactor+2) result upperBound
-                                                    where
-                                                      reachedUpperBound = currentFactor > upperBound
-                                                      foundNewFactor = num `mod` currentFactor == 0
+isPrime :: Int -> Bool
+isPrime x = all (\y -> x `mod` y > 0) (candidates x)
+                where
+                  candidates z = takeWhile (\p -> p*p <= z) primes
 
