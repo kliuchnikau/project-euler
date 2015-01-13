@@ -12,4 +12,3 @@ diffOfSums :: Num a => [a] -> a
 diffOfSums xs = (squareOfSum xs) - (sumOfSquares xs)
 
 -- diffOfSums [1..100]
--- 25164150

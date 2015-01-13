@@ -2,4 +2,3 @@
 import Digits
 
 powerDigitSum = sum (digits (2^1000))
---1366

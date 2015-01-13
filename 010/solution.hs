@@ -24,10 +24,8 @@ oddFactorsUpto' num currentFactor result upperBound | reachedUpperBound = result
                                                       foundNewFactor = num `mod` currentFactor == 0
 
 -- sumPrimesBelow 2000000
--- 142913828922
 -- (519.57 secs, 148427107648 bytes)
 
 otherSumPrimesBelow n = sum [ x | x <- [1..n-1], isPrime x]
 
--- 142913828923
 -- (26.91 secs, 7311696232 bytes)

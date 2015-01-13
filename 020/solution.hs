@@ -4,4 +4,3 @@ factorial n = product [1..n]
 sumOfFactorialDigits n = sum (digits (factorial n))
 
 --sumOfFactorialDigits 100
---648
