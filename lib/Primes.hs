@@ -27,6 +27,7 @@ factorsUpto' num currentFactor result upperBound | reachedUpperBound || factorAl
                                                    foundNewFactor = num `mod` currentFactor == 0
 
 prime :: Int -> Bool
+prime 1 = False
 prime n = (factorsUpto n upperBound) == [1]
   where
     upperBound = floor (sqrt (fromIntegral n))
