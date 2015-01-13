@@ -19,19 +19,19 @@ factors' num currentFactor result | passedNum || factorAlreadyInList = sort (nub
 prime :: Int -> Bool
 prime 1 = False
 prime 2 = True
-prime n = (potentialPrimeFactorsUpto n upperBound) == [1]
-  where
-    upperBound = floor (sqrt (fromIntegral n))
+prime n | even n = False
+        | otherwise = (oddFactorsUpto n upperBound) == []
+          where
+            upperBound = floor (sqrt (fromIntegral n))
 
-potentialPrimeFactorsUpto :: Int -> Int -> [Int]
-potentialPrimeFactorsUpto n upperBound = potentialPrimeFactorsUpto' n 3 startingResult upperBound
-  where startingResult = if even n then [1,2] else [1]
+oddFactorsUpto :: Int -> Int -> [Int]
+oddFactorsUpto n upperBound = oddFactorsUpto' n 3 [] upperBound
 
-potentialPrimeFactorsUpto' :: Int -> Int -> [Int] -> Int -> [Int]
-potentialPrimeFactorsUpto' num currentFactor result upperBound | reachedUpperBound = result
-                                                               | foundNewFactor = potentialPrimeFactorsUpto' num (currentFactor+2) (currentFactor:result) upperBound
-                                                               | otherwise = potentialPrimeFactorsUpto' num (currentFactor+2) result upperBound
-                                                               where
-                                                                 reachedUpperBound = currentFactor > upperBound
-                                                                 foundNewFactor = num `mod` currentFactor == 0
+oddFactorsUpto' :: Int -> Int -> [Int] -> Int -> [Int]
+oddFactorsUpto' num currentFactor result upperBound | reachedUpperBound = result
+                                                    | foundNewFactor = oddFactorsUpto' num (currentFactor+2) (currentFactor:result) upperBound
+                                                    | otherwise = oddFactorsUpto' num (currentFactor+2) result upperBound
+                                                    where
+                                                      reachedUpperBound = currentFactor > upperBound
+                                                      foundNewFactor = num `mod` currentFactor == 0
 
