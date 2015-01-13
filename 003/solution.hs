@@ -1,4 +1,5 @@
 -- https://projecteuler.net/problem=3
+import Factors
 import Primes
 
 maxPrimeFactor :: Int -> Int
