@@ -21,9 +21,6 @@ factorMultiplicity base factor | factor == 1 = base `div` 1
 nFactors :: Int -> Int
 nFactors num = product (map (\factor -> factorMultiplicity num factor + 1) (primeFactors num))
 
-nFactorsOld :: Int -> Int
-nFactorsOld num = length (factors num)
-
 highlyDivisibleTriangularNum :: Int -> Int
 highlyDivisibleTriangularNum minFactors = head (filter withNfactors triangles)
   where
