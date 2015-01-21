@@ -16,7 +16,7 @@ nextDayOfWeek "Unknown" = "Unknown"
 nextDayOfWeek currentDayOfWeek = daysOfWeek !! ((currentDayIdx+1) `mod` 7)
   where
     currentDayIdx = snd $ head $ filter (\(day,idx) -> day == currentDayOfWeek) (daysOfWeek `zip` [0..6])
-    daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Trursday", "Friday", "Saturday", "Sunday"]
+    daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
 nextDay :: ((Int,Int,Int), String) -> ((Int,Int,Int), String)
 nextDay ((dayNo,monthNo,yearNo), currentDayOfWeek) = (nextDate daysInMonth, nextDayOfWeek currentDayOfWeek)
@@ -35,11 +35,11 @@ daysRange (startDay,endDay) = takeWhile (\(day,dayOfWeek) -> not $ day == dayAft
   where
     dayAfterEnd = fst $ nextDay(endDay, "Unknown")
 
-isMondayOnFirst :: ((Int,Int,Int), String) -> Bool
-isMondayOnFirst ((1,_,_), "Monday") = True
-isMondayOnFirst _ = False
+isSundayOnFirst :: ((Int,Int,Int), String) -> Bool
+isSundayOnFirst ((1,_,_), "Sunday") = True
+isSundayOnFirst _ = False
 
-countMondaysOnFirst :: ((Int,Int,Int),(Int,Int,Int)) -> Int
-countMondaysOnFirst (from,to) = length [ day | day <- daysRange(from, to), isMondayOnFirst day]
+countSundaysOnFirst :: ((Int,Int,Int),(Int,Int,Int)) -> Int
+countSundaysOnFirst (from,to) = length [ day | day <- daysRange(from, to), isSundayOnFirst day]
 
--- countMondaysOnFirst ((1,1,1991),(31,12,2000))
+-- countSundaysOnFirst ((1,1,1901),(31,12,2000))
