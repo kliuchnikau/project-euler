@@ -1,6 +1,7 @@
-import qualified Data.Matrix as Matrix
+import Data.Matrix
 
-input = Matrix.fromLists [
+input :: Matrix Int
+input = fromLists [
   [08, 02, 22, 97, 38, 15, 00, 40, 00, 75, 04, 05, 07, 78, 52, 12, 50, 77, 91, 08],
   [49, 49, 99, 40, 17, 81, 18, 57, 60, 87, 17, 40, 98, 43, 69, 48, 04, 56, 62, 00],
   [81, 49, 31, 73, 55, 79, 14, 29, 93, 71, 40, 67, 53, 88, 30, 03, 49, 13, 36, 65],
@@ -21,3 +22,19 @@ input = Matrix.fromLists [
   [20, 69, 36, 41, 72, 30, 23, 88, 34, 62, 99, 69, 82, 67, 59, 85, 74, 04, 36, 16],
   [20, 73, 35, 29, 78, 31, 90, 01, 74, 31, 49, 71, 48, 86, 81, 16, 23, 57, 05, 54],
   [01, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52, 01, 89, 19, 67, 48]]
+
+maxProductInGrid :: Int -> Matrix Int -> Int
+maxProductInGrid productLength grid = maximum  allPossibleProducts
+  where
+    allPossibleProducts = concat [ productsIn3Directions (x,y) | x <- [1..rightmostCol], y <- [1..bottomRow]] ++
+      [ productDiagonalDownLeft (x,y) | x <- [productLength..ncols grid], y <- [1..bottomRow]]
+    rightmostCol = ncols grid - productLength + 1
+    bottomRow = nrows grid - productLength + 1
+    productsIn3Directions point = [productDown point, productDiagonalDownRight point, productRight point]
+    productDown (fromx,fromy) = product [ grid ! (x,fromy) | x <- [fromx..fromx+productLength-1]]
+    productDiagonalDownRight (fromx,fromy) = product [ grid ! (fromx+i,fromy+i) | i <- [0..productLength-1]]
+    productRight (fromx,fromy) = product [ grid ! (fromx,y) | y <- [fromy..fromy+productLength-1]]
+    productDiagonalDownLeft (fromx,fromy) = product [ grid ! (fromx-i,fromy+i) | i <- [0..productLength-1]]
+
+maxProductOf4InGrid :: Matrix Int -> Int
+maxProductOf4InGrid = maxProductInGrid 4
