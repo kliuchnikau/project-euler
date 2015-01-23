@@ -24,13 +24,15 @@ input = fromLists [
   [01, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52, 01, 89, 19, 67, 48]]
 
 maxProductInGrid :: Int -> Matrix Int -> Int
-maxProductInGrid productLength grid = maximum  allPossibleProducts
+maxProductInGrid productLength grid = maximum . concat $ [ productsInAllDirections (x,y) | x <- [1..rightmostCol], y <- [1..bottomRow]]
   where
-    allPossibleProducts = concat [ productsIn3Directions (x,y) | x <- [1..rightmostCol], y <- [1..bottomRow]] ++
-      [ productDiagonalDownLeft (x,y) | x <- [productLength..ncols grid], y <- [1..bottomRow]]
     rightmostCol = ncols grid - productLength + 1
     bottomRow = nrows grid - productLength + 1
-    productsIn3Directions point = [productDown point, productDiagonalDownRight point, productRight point]
+    productsInAllDirections squareTopLeftPoint@(pointx,pointy) = [
+      productDown squareTopLeftPoint,
+      productRight squareTopLeftPoint,
+      productDiagonalDownRight squareTopLeftPoint,
+      productDiagonalDownLeft (pointx+3,pointy)]
     productDown (fromx,fromy) = product [ grid ! (x,fromy) | x <- [fromx..fromx+productLength-1]]
     productDiagonalDownRight (fromx,fromy) = product [ grid ! (fromx+i,fromy+i) | i <- [0..productLength-1]]
     productRight (fromx,fromy) = product [ grid ! (fromx,y) | y <- [fromy..fromy+productLength-1]]
