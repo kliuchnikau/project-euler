@@ -19,24 +19,24 @@ buildMatrix input = Matrix.fromLists $ adjustListsToSameLength $ map listOfInts 
     listOfInts :: String -> [Integer]
     listOfInts str = map (\intStr -> read intStr :: Integer) $ splitOn " " str
 
-buildProductMatrix :: Matrix.Matrix Integer -> Matrix.Matrix Integer
-buildProductMatrix matrix = buildProductMatrix' ((Matrix.nrows matrix) - 1, 1) matrix
+buildSumMatrix :: Matrix.Matrix Integer -> Matrix.Matrix Integer
+buildSumMatrix matrix = buildSumMatrix' ((Matrix.nrows matrix) - 1, 1) matrix
   where
-    buildProductMatrix' :: (Int,Int) -> Matrix.Matrix Integer -> Matrix.Matrix Integer
-    buildProductMatrix' (x,y) matrix
+    buildSumMatrix' :: (Int,Int) -> Matrix.Matrix Integer -> Matrix.Matrix Integer
+    buildSumMatrix' (x,y) matrix
       | x == 0 = matrix
-      | y > x = buildProductMatrix' (x-1,1) matrix
-      | otherwise = buildProductMatrix' (x,y+1) $ Matrix.setElem (cellProductValue (x,y) matrix) (x,y) matrix
-    cellProductValue (x,y) matrix = max productWithLeftLeaf productWithRightLeaf
+      | y > x = buildSumMatrix' (x-1,1) matrix
+      | otherwise = buildSumMatrix' (x,y+1) $ Matrix.setElem (cellSumValue (x,y) matrix) (x,y) matrix
+    cellSumValue (x,y) matrix = max sumWithLeftLeaf sumWithRightLeaf
       where
-        productWithLeftLeaf = val (x,y) * val (x+1,y)
-        productWithRightLeaf = val (x,y) * val (x+1,y+1)
+        sumWithLeftLeaf = val (x,y) + val (x+1,y)
+        sumWithRightLeaf = val (x,y) + val (x+1,y+1)
         val (x,y) = matrix Matrix.! (x,y)
 
-getMaxProduct :: String -> IO Integer
-getMaxProduct fileName = do
+getMaxSum :: String -> IO Integer
+getMaxSum fileName = do
   fileLines <- readLines fileName
   let basicMatrix = buildMatrix fileLines
-  return ((Matrix.! (1,1)) $ buildProductMatrix basicMatrix)
+  return ((Matrix.! (1,1)) $ buildSumMatrix basicMatrix)
 
--- getMaxProduct "triangle.txt"
+-- getMaxSum "triangle.txt"
