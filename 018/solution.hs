@@ -20,20 +20,18 @@ buildMatrix input = Matrix.fromLists $ adjustListsToSameLength $ map listOfInts 
     listOfInts str = map (\intStr -> read intStr :: Integer) $ splitOn " " str
 
 buildProductMatrix :: Matrix.Matrix Integer -> Matrix.Matrix Integer
-buildProductMatrix matrix = buildProductMatrixRow (Matrix.nrows matrix - 1) matrix
+buildProductMatrix matrix = buildProductMatrix' ((Matrix.nrows matrix) - 1, 1) matrix
   where
-    buildProductMatrixRow :: Int -> Matrix.Matrix Integer -> Matrix.Matrix Integer
-    buildProductMatrixRow forRow matrix
-      | forRow == 0 = matrix
-      | otherwise = buildProductMatrixRow (forRow-1) $ buildProductMatrixCells (1, forRow) matrix
-    buildProductMatrixCells :: (Int,Int) -> Matrix.Matrix Integer -> Matrix.Matrix Integer
-    buildProductMatrixCells (x,y) matrix
-      | x > y = matrix
-      | otherwise = buildProductMatrixCells (x+1,y) $ Matrix.setElem (cellProductValue (x,y) matrix) (x,y) matrix
-    cellProductValue (x,y) matrix = max (val (x,y) * val (x,y+1)) (val (x,y) * val (x+1,y+1))
+    buildProductMatrix' :: (Int,Int) -> Matrix.Matrix Integer -> Matrix.Matrix Integer
+    buildProductMatrix' (x,y) matrix
+      | x == 0 = matrix
+      | y > x = buildProductMatrix' (x-1,1) matrix
+      | otherwise = buildProductMatrix' (x,y+1) $ Matrix.setElem (cellProductValue (x,y) matrix) (x,y) matrix
+    cellProductValue (x,y) matrix = max productWithLeftLeaf productWithRightLeaf
       where
+        productWithLeftLeaf = val (x,y) * val (x+1,y)
+        productWithRightLeaf = val (x,y) * val (x+1,y+1)
         val (x,y) = matrix Matrix.! (x,y)
-
 
 getMaxProduct :: String -> IO Integer
 getMaxProduct fileName = do
