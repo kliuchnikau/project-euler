@@ -20,16 +20,16 @@ knownMinNeverSumOfAbundants = 28123
 allAbundants :: [Int]
 allAbundants = abundantNumsUnder knownMinNeverSumOfAbundants
 
-allSumsOf2Abundants :: [Int]
-allSumsOf2Abundants = Set.toList $ Set.fromList [x + y | x <- allAbundants, y <- allAbundants, x + y <= knownMinNeverSumOfAbundants]
+allSumsOf2Abundants :: Set.Set Int
+allSumsOf2Abundants = Set.fromList [x + y | x <- allAbundants, y <- allAbundants, x + y <= knownMinNeverSumOfAbundants]
 
 findNotSumOfAbundants :: Int
-findNotSumOfAbundants = sum notSumOfAbundants
+findNotSumOfAbundants = sum $ Set.toList notSumOfAbundants
   where
-    allPossibleNumbers = [1..knownMinNeverSumOfAbundants]
-    notSumOfAbundants = allPossibleNumbers \\ allSumsOf2Abundants
+    allPossibleNumbers = Set.fromList [1..knownMinNeverSumOfAbundants]
+    notSumOfAbundants = allPossibleNumbers Set.\\ allSumsOf2Abundants
 
 -- works 110 sec in ghci. 8 sec in ghc.
 --main = print findNotSumOfAbundants
---main = print $ length allAbundants : 6965, 11sec
-main = print $ length allSumsOf2Abundants -- 27sec
+--main = print $ length allAbundants -- 11sec
+--main = print $ Set.size allSumsOf2Abundants -- 27sec
