@@ -2,7 +2,6 @@ import Factors
 import Data.List
 import qualified Data.Set as Set
 
-
 sumDivisors :: Int -> Int
 sumDivisors = sum . deleteLast . factors
   where deleteLast = reverse . tail . reverse
@@ -29,7 +28,4 @@ findNotSumOfAbundants = sum $ Set.toList notSumOfAbundants
     allPossibleNumbers = Set.fromList [1..knownMinNeverSumOfAbundants]
     notSumOfAbundants = allPossibleNumbers Set.\\ allSumsOf2Abundants
 
--- works 110 sec in ghci. 8 sec in ghc.
---main = print findNotSumOfAbundants
---main = print $ length allAbundants -- 11sec
---main = print $ Set.size allSumsOf2Abundants -- 27sec
+main = print findNotSumOfAbundants -- 29sec
