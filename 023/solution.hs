@@ -18,3 +18,7 @@ findNotSumOfAbundantsUnder = sum [ x | x <- [1..knownMinNeverSumOfAbundants], no
     knownMinNeverSumOfAbundants = 28123
     allAbundants = abundantNumsUnder knownMinNeverSumOfAbundants
     notSumOfAbundants = undefined
+
+-- works 110 sec in ghci. 8 sec in ghc.
+main = do
+  putStrLn $ show $ length $ abundantNumsUnder 28123
