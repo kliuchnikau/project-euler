@@ -1,7 +1,7 @@
-import Data.List.Split
+import Data.String.Utils
 
 listOfNames :: String -> [String]
-listOfNames fileContent = splitOn "," fileContent
+listOfNames fileContent = split "," $ replace "\"" "" fileContent
 
 readNamesFromFile :: String -> IO [String]
 readNamesFromFile fileName = do
