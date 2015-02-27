@@ -1,11 +1,17 @@
+import Data.List
 import Data.String.Utils
-
-listOfNames :: String -> [String]
-listOfNames fileContent = split "," $ replace "\"" "" fileContent
 
 readNamesFromFile :: String -> IO [String]
 readNamesFromFile fileName = do
   fileContent <- readFile fileName
   return (listOfNames fileContent)
+  where
+    listOfNames :: String -> [String]
+    listOfNames fileContent = split "," $ replace "\"" "" fileContent
 
--- readNamesFromFile "names.txt"
+findNamesScores :: [String] -> [String]
+findNamesScores namesList = sort namesList
+
+main = do
+  namesList <- readNamesFromFile "names.txt"
+  return (findNamesScores namesList)
