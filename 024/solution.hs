@@ -8,10 +8,9 @@ findLexicographicalPermutation number availableDigits
   | length availableDigits == 1 = availableDigits
   | otherwise = [foundDigit] ++ findLexicographicalPermutation reducedNumber outstandingAvailableDigits
   where
-    permutationsOfAvailableDigits = permutationsOf availableDigits
-    reducedNumber = number `mod` permutationsOfAvailableDigits
-    foundDigit = availableDigits !! (number `div` permutationsOfAvailableDigits)
+    permutationsOfOutstandingDigits = permutationsOf (tail availableDigits)
+    reducedNumber = number `mod` permutationsOfOutstandingDigits
+    foundDigit = availableDigits !! (number `div` permutationsOfOutstandingDigits)
     outstandingAvailableDigits = filter (\digit -> digit /= foundDigit) availableDigits
 
-main = return (findLexicographicalPermutation 3 [0..2])
--- findLexicographicalPermutation 1000000, [0..9]
+main = return (findLexicographicalPermutation 999999 [0..9])
