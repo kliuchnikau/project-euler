@@ -2,9 +2,7 @@ module Solution where
 
 import Primes
 import Data.List
-import Debug.Trace
 
-{-isPrimitiveRootModulo :: Num a => a -> a -> Bool-}
 isPrimitiveRootModulo :: Integer -> Integer -> Bool
 isPrimitiveRootModulo base p = [1..p-1] == sort modules
   where
@@ -15,4 +13,4 @@ findLongestCyclicNumberBefore maxNum = last $ filter (10 `isPrimitiveRootModulo`
   where
     allMatchingPrimes = map fromIntegral $ takeWhile (< maxNum) primes
 
-main = print $ findLongestCyclicNumberBefore 1000
+{-main = print $ findLongestCyclicNumberBefore 1000-}

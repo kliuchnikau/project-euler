@@ -12,3 +12,6 @@ main = hspec $ do
 
     specify "False otherwise" $
       (10 `isPrimitiveRootModulo` 11) `shouldBe` False
+
+    specify "It does not overflow for big numbers" $
+      (10 `isPrimitiveRootModulo` 97) `shouldBe` True
