@@ -2,15 +2,17 @@ module Solution where
 
 import Primes
 import Data.List
+import Debug.Trace
 
-isPrimitiveRootModulo :: Int -> Int -> Bool
-isPrimitiveRootModulo base p = [1..base-1] == modules
+{-isPrimitiveRootModulo :: Num a => a -> a -> Bool-}
+isPrimitiveRootModulo :: Integer -> Integer -> Bool
+isPrimitiveRootModulo base p = [1..p-1] == sort modules
   where
-    modules = map (\power -> (p^power) `mod` base) [0..base-2]
+    modules = map (\power -> (base^power) `mod` p) [0..p-2]
 
-findLongestCyclicNumberBefore :: Int -> Int
+findLongestCyclicNumberBefore :: Int -> Integer
 findLongestCyclicNumberBefore maxNum = last $ filter (10 `isPrimitiveRootModulo`) allMatchingPrimes
   where
-    allMatchingPrimes = takeWhile (\p -> p < maxNum) primes
+    allMatchingPrimes = map fromIntegral $ takeWhile (< maxNum) primes
 
-{-main = print $ findLongestCyclicNumberBefore 1000-}
+main = print $ findLongestCyclicNumberBefore 1000
