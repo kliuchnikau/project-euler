@@ -1,7 +1,7 @@
-module SolutionSpec where
+module MainSpec where
 
 import Test.Hspec
-import Solution
+import Main
 
 main :: IO ()
 main = hspec $ do
