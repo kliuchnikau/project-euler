@@ -14,6 +14,6 @@ longestConsecutivePrimesSum = sum $ head $ filter (isPrime.sum) possibleWindows
   where
     possibleWindows :: [[Int]]
     possibleWindows = foldr combineWindows [] [0..(length primesRange)]
-    combineWindows windowSize otherWindows = otherWindows ++ (windowed windowSize primesRange)
+    combineWindows windowSize otherWindows = otherWindows ++ reverse (windowed windowSize primesRange)
 
 main = print $ longestConsecutivePrimesSum
