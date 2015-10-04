@@ -9,3 +9,6 @@ solveEquation (QEquation {aVal=a, bVal=b, cVal=c}) = if discriminant<0 then erro
     discriminant = b^2 - 4*a*c
     x = (-b + sqrt discriminant) / (2*a)
     y = (-b - sqrt discriminant) / (2*a)
+
+substituteUnknown :: QEquation -> Double -> Double
+substituteUnknown (QEquation {aVal=a, bVal=b, cVal=c}) x = a*x^2 + b*x + c
