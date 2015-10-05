@@ -1,15 +1,13 @@
 module Main where
 
 import Digits
-
-factorials = 1:[ product [1..x] | x <- [1..]]
-factorial n = factorials !! n
+import Factorials
 
 biggestPossibleNumber :: Int
 biggestPossibleNumber = longestNumWith $ head . reverse $ takeWhile possibleBuildThisLongNumber [1..]
   where
     possibleBuildThisLongNumber digitsNum = digitsNum <= (digitsCount $ longestNumWith digitsNum)
-    longestNumWith digitsNum = factorial(9) * digitsNum
+    longestNumWith digitsNum = digitsNum * factorial(9)
 
 allNumbersAreFactorialOfTheirDigits :: [Int]
 allNumbersAreFactorialOfTheirDigits = filter factorialOfItsDigits [1..biggestPossibleNumber]
