@@ -1,5 +1,15 @@
-module Factors (factors) where
+module Factors (factors,factorsWithout1andSelf,primeFactors) where
 import Data.List
+import Primes
+
+primeFactors :: Int -> [Int]
+primeFactors n = filter isFactor candidates
+  where
+    candidates = takeWhile (<= (n `div` 2)) primes
+    isFactor factor = n `mod` factor == 0
+
+factorsWithout1andSelf :: Int -> [Int]
+factorsWithout1andSelf n = factors' n 2 []
 
 factors :: Int -> [Int]
 factors n = factors' n 1 []
