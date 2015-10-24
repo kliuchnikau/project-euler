@@ -12,15 +12,13 @@ notGoldbach :: Int -> Bool
 notGoldbach num = null goldbachRepresentations
   where
     goldbachRepresentations :: [(Int,Int)]
-    goldbachRepresentations = [ (prime, square) | prime <- matchingPrimes, square <- matchingSquares prime, prime + 2*square^2 == num ]
+    goldbachRepresentations = [ (prime, matchingSquare prime) | prime <- matchingPrimes, prime + 2*(matchingSquare prime)^2 == num ]
 
     matchingPrimes :: [Int]
     matchingPrimes = takeWhile (< num) primes
 
-    matchingSquares :: Int -> [Int]
-    matchingSquares prime = [1..(maximumSquare prime)]
-    maximumSquare :: Int -> Int
-    maximumSquare prime = floor $ sqrt $ (fromIntegral(num - prime)) / 2
+    matchingSquare :: Int -> Int
+    matchingSquare prime = floor $ sqrt $ (fromIntegral(num - prime)) / 2
 
 findFirstGoldbachOther = head $ filter notGoldbach oddCompositeNumbers
 
